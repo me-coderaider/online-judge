@@ -25,7 +25,8 @@ const router= createBrowserRouter([
 		element : <RootLayout/>, // this component will act as wrapper for 
 		errorElement: <ErrorPage/>,
 		children : [
-			{path : '/', element: <HomePage />},
+			{index:true, element: <HomePage />}, // index=true means it'll run for /(root ) or empty '' path
+			// {path : '', element: <HomePage />},
 			{path:'/problems_list', element:<ProblemList/>},
 			{path: '/problems_list/:problem_code', element:<ProblemPage/>}
 		]
