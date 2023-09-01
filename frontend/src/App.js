@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage';
 import ProblemList from './pages/ProblemList';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/ErrorPage';
+import ProblemPage from './pages/ProblemPage';
 
 // const routeDefinitions=createRoutesFromElements(
 // 	<Route>
@@ -25,7 +26,8 @@ const router= createBrowserRouter([
 		errorElement: <ErrorPage/>,
 		children : [
 			{path : '/', element: <HomePage />},
-			{path:'/problems-list', element:<ProblemList/>}
+			{path:'/problems_list', element:<ProblemList/>},
+			{path: '/problems_list/:problem_code', element:<ProblemPage/>}
 		]
  	}, 
  // adding this for applying navigation header to all of the pages	
