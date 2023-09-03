@@ -9,7 +9,8 @@ import HomePage from './pages/HomePage';
 import ProblemList from './pages/ProblemList';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/ErrorPage';
-import ProblemPage from './pages/ProblemPage';
+// import ProblemPage from './pages/ProblemPage';
+import AuthenticationPage, {action as authAction} from './pages/Authentication';
 
 // const routeDefinitions=createRoutesFromElements(
 // 	<Route>
@@ -28,7 +29,7 @@ const router= createBrowserRouter([
 			{index:true, element: <HomePage />}, // index=true means it'll run for /(root ) or empty '' path
 			// {path : '', element: <HomePage />},
 			{path:'/problems_list', element:<ProblemList/>},
-			{path: '/problems_list/:problem_code', element:<ProblemPage/>}
+			{path: '/auth', element:<AuthenticationPage/>, action:authAction}
 		]
  	}, 
  // adding this for applying navigation header to all of the pages	
