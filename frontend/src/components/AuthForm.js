@@ -27,6 +27,9 @@ function AuthForm(){
             <div>
                 <p>Create A New Account</p>
             </div>
+            <div>
+                Made with ❤️
+            </div>
         </>
     );
 }

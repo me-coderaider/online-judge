@@ -9,8 +9,8 @@ import HomePage from './pages/HomePage';
 import ProblemList from './pages/ProblemList';
 import RootLayout from './pages/Root';
 import ErrorPage from './pages/ErrorPage';
-// import ProblemPage from './pages/ProblemPage';
 import AuthenticationPage, {action as authAction} from './pages/Authentication';
+import ProblemPage from './pages/ProblemPage';
 
 // const routeDefinitions=createRoutesFromElements(
 // 	<Route>
@@ -29,6 +29,7 @@ const router= createBrowserRouter([
 			{index:true, element: <HomePage />}, // index=true means it'll run for /(root ) or empty '' path
 			// {path : '', element: <HomePage />},
 			{path:'/problems_list', element:<ProblemList/>},
+			{path:'/problems_list/:problem_code', element:<ProblemPage/>},
 			{path: '/auth', element:<AuthenticationPage/>, action:authAction}
 		]
  	}, 
