@@ -23,7 +23,7 @@ function ProblemList(){
             <ul>
                 {PROBLEMS_LIST.map((problem => (
                     <li key={problem.problemStatement}>
-                        <Link to={`/problems_list/${problem.code}`}>{problem.code}</Link></li>)
+                        <Link to={`/problems_list/${problem.code}`}>{problem.name}</Link></li>)
                 ))}
             </ul>
         </>
