@@ -3,6 +3,6 @@ const authenticationController=require('../controller/authentication');
 
 const router=express.Router();
 
-router.get('/login',authenticationController.getLogin);
+router.post('/login',authenticationController.getLogin);
 
 module.exports=router;

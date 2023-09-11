@@ -20,7 +20,7 @@ function ProblemList(){
     return (
         <>
             <h1>Problems List</h1>
-            <ul>
+            <ul >
                 {PROBLEMS_LIST.map((problem => (
                     <li key={problem.problemStatement}>
                         <Link to={`/problems_list/${problem.code}`}>{problem.name}</Link></li>)

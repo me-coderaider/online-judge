@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 
 function MainNavigation(){
@@ -7,9 +7,9 @@ function MainNavigation(){
             <nav>
                 <ul className={classes.list}>
                     {/* use NavLink tag */}
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/problems_list">Problems</Link></li>
-                    <li><Link to="/auth">Sign Up</Link></li>
+                    <li ><NavLink to="/">Home</NavLink></li>
+                    <li><NavLink to="/problems_list">Problems</NavLink></li>
+                    <li><NavLink to="/login">Log In</NavLink></li>
                 </ul>
             </nav>
         </header>
