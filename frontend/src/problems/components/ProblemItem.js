@@ -1,19 +1,25 @@
-import React from "react";
-import {Link} from 'react-router-dom'
-import './ProblemItem.css'
+import * as React from 'react';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import { Link } from "react-router-dom";
+// import Table from '@mui/material/Table';
+// import TableBody from '@mui/material/TableBody';
+// import TableContainer from '@mui/material/TableContainer';
+// import TableHead from '@mui/material/TableHead';
+// import Paper from '@mui/material/Paper';
 
-const ProblemsItem = (props) =>{ 
-    return (
-        <li className="users=list">
-            <Link to={props.id}>
-            <div className="user-item__content">
-                <h2>{props.name}</h2>
-                {/* <h3>{props.description}</h3> */}
-            </div>
-            
-            </Link>
-        </li>
-    );
-}
+import "./ProblemItem.css";
 
-export default ProblemsItem; 
+const ProblemsItem = (props) => {
+  return (
+    <TableRow>
+      <TableCell align="left">{props.id}</TableCell>
+      <TableCell align="left">
+        <Link to={`/problems/${props.id}`}>{props.name}</Link>
+      </TableCell>
+      <TableCell align="left">{props.difficulty}</TableCell>
+    </TableRow>
+  );
+};
+
+export default ProblemsItem;
