@@ -3,6 +3,8 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Users from './users/pages/Users';
 import NewProblem from './problems/pages/NewProblem'
 import MainNavigation from './shared/components/Navigation/MainNavigation';
+import SingleProblem from './singleProblem/pages/SingleProblem';
+import AddNewProblem from './singleProblem/pages/AddNewProblem';
 
 const App = () =>{
     return (
@@ -12,6 +14,8 @@ const App = () =>{
                 <Routes>
                     <Route path="/" element={<Users />}></Route>
                     <Route path="/problems" element={<NewProblem />}></Route>
+                    <Route path="/new_problem" element={<AddNewProblem />}></Route>
+                    <Route path="/problems/:probId" element={<SingleProblem />}></Route>
                 </Routes>
             </main>
         </Router>

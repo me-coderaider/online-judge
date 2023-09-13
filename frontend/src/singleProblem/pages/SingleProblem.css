@@ -1,0 +1,25 @@
+.singleProblem-parent {
+    border: 1px solid black;
+    margin: 1rem;
+    /* margin-top: auto; */
+    padding: 2rem 2rem;
+    text-align: center;
+    color: white;
+    /* height: 100vh; */
+    /* display:inline ; */
+  }
+  .singleProblem-description {
+    display: block;
+    border: 1px solid green;
+    padding: 1rem 1rem;
+   /* width: 30vh; */
+  }
+  .singleProblem-child {
+    display: inline-block;
+    border: 1px solid red;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    /* height: 80vh;
+    width: 50vh; */
+  }
+  
