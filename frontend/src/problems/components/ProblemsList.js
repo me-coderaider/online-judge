@@ -43,6 +43,7 @@ const ProblemsList = (props) => {
               name={problem.name}
               description={problem.description}
               difficulty={problem.difficulty}
+              creatorId={problem.creatorId}
             />
           ))}
         </TableBody>
