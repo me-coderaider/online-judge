@@ -32,7 +32,7 @@ const SingleProblem = () =>{
     return (
         <div className="singleProblem-parent">
             <div>
-                {problemData.creatorId===currentLoggedInUser && <Button>Edit Problem</Button>}
+                {problemData.creatorId===currentLoggedInUser && <Button to={`/updateproblem/${problemData.creatorId}/${problemData.id}`}>Edit Problem</Button>}
             </div>
             <div className="singleProblem-description">
                 {problemData.name}

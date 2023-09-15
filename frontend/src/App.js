@@ -5,6 +5,8 @@ import NewProblem from './problems/pages/NewProblem'
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import SingleProblem from './singleProblem/pages/SingleProblem';
 import AddNewProblem from './singleProblem/pages/AddNewProblem';
+import UpdateProblem from './singleProblem/pages/UpdateProblem';
+import Auth from './users/pages/Auth';
 
 const App = () =>{
     return (
@@ -16,6 +18,8 @@ const App = () =>{
                     <Route path="/problems" element={<NewProblem />}></Route>
                     <Route path="/new_problem" element={<AddNewProblem />}></Route>
                     <Route path="/problems/:probId" element={<SingleProblem />}></Route>
+                    <Route path="/updateproblem/:creatorId/:probId" element={<UpdateProblem />}></Route>
+                    <Route path="/auth" element={<Auth />}></Route>
                 </Routes>
             </main>
         </Router>
