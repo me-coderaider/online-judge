@@ -1,10 +1,32 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 
-// const mongoConnect=require("../server/util/database").mongoConnect;
+const problemRoutes = require("./routes/problems-routes");
+const HttpError = require("./model/http-error");
 
 const app = express();
 
+app.use(bodyParser.json());
+
+app.use("/api/problems", problemRoutes);
+
+app.use((req, res, next) => {
+  const error = new HttpError("Could not find this route.", 404);
+  throw error;
+});
+
+// adding error handling middleware, mainly for handling unknown request/paths
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500);
+  res.json({ message: error.message || "An unknown error occurred." });
+});
+
+app.listen(5000);
+
+/*
 app.set('view engine', 'ejs'); // this tell express to use this engine to display dynamic data
 app.set('views', 'views'); // and using this, express can find where are those dynamic views stored
 
@@ -35,3 +57,5 @@ app.use("/", (req, res, next) => {
 // mongoConnect(()=>{
 app.listen(8080);
 // });
+
+*/
