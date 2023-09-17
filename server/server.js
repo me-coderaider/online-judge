@@ -1,7 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const problemRoutes = require("./routes/problems-routes");
+const usersRoutes = require("./routes/users-routes");
 const HttpError = require("./model/http-error");
 
 const app = express();
@@ -9,6 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use("/api/problems", problemRoutes);
+app.use("/api/users", usersRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
@@ -24,7 +29,15 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occurred." });
 });
 
-app.listen(5000);
+// where to use the mongoose, it's better to start the server if we're connected to DB otherwise not
+mongoose
+  .connect(process.env.MONGODB_URL)
+  .then(() => {
+    app.listen(5000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 /*
 app.set('view engine', 'ejs'); // this tell express to use this engine to display dynamic data

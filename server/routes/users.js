@@ -1,1 +1,0 @@
-// this will handle those routes, which can handle the routes for REGULAR || NORMAL USERS   
