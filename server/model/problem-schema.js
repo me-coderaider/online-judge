@@ -7,7 +7,7 @@ const problemSchema = new Schema({
   description: { type: String, required: true },
   difficulty: { type: String, required: true },
   solved: { type: Boolean },
-  creator: { type: String, required: true },
+  creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
 });
 
 // model method takes 2 parameter, first : collection name, 2nd schema for it

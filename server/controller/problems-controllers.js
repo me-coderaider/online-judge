@@ -2,7 +2,9 @@ const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../model/http-error");
 const { validationResult } = require("express-validator");
 const Problem = require("../model/problem-schema");
+const User = require("../model/user-schema");
 const testProblemArray = require("../../frontend/src/shared/components/testingData/testData");
+const { default: mongoose } = require("mongoose");
 
 let allProblems = testProblemArray.PROBLEMS;
 
@@ -34,16 +36,27 @@ const getProblemById = async (req, res, next) => {
   res.json({ problem: problem.toObject({ getters: true }) });
 };
 
-const getAllProblems = (req, res, next) => {
-  res.json({ allProblems });
+const getAllProblems = async (req, res, next) => {
+  let problems;
+  try {
+    problems = await Problem.find({});
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching problems failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+  res.json({
+    problems: problems.map((problem) => problem.toObject({ getters: true })),
+  });
 };
 
-const createProblem = (req, res, next) => {
+const createProblem = async (req, res, next) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    throw new HttpError(
-      "Invalid inputs passed, please check your data once",
-      422
+    return next(
+      new HttpError("Invalid inputs passed, please check your data once", 422)
     );
   }
 
@@ -53,14 +66,50 @@ const createProblem = (req, res, next) => {
   const createdProblem = new Problem({
     title: title,
     description: description,
-    testCases: testCases,
+    testCases: "testCases",
     solved: false,
     difficulty: difficulty,
     creator: creator,
   });
-  //   allProblems.push(createdProblem);
-  createdProblem.save();
+  let user;
+  try {
+    user = await User.findById(creator);
+  } catch (err) {
+    const error = new HttpError(
+      "Problem creation failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
 
+  if (!user) {
+    const error = new HttpError(
+      "Could not find user for the provided id.",
+      404
+    );
+    return next(error);
+  }
+
+  try {
+    // now we have to save the created place with the
+    // a) user id, b) update the problem id in the users' problem list
+    // basically, we'll be performing 2 operations and one of them can fail & we can achieve this using SESSIONS & TRANSACTIONS
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    await createdProblem.save({ session: session });
+    user.problems.push(createdProblem);
+    await user.save({ session: session });
+
+    await session.commitTransaction();
+  } catch (err) {
+    const error = new HttpError(
+      "Problem creation failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
   res.status(201).json({ problem: createdProblem });
 };
 
@@ -111,14 +160,11 @@ const updateProblemById = async (req, res, next) => {
 const deleteProblemById = async (req, res, next) => {
   const problemId = req.params.probId;
 
-  //   if (!allProblems.find((p) => p.id === problemId)) {
-  //     throw new HttpError("Could not find a problem for that id", 404);
-  //   }
-  //   allProblems = allProblems.filter((p) => p.id !== problemId);
-
   let problem;
   try {
-    problem = await Problem.findById(problemId);
+    problem = await Problem.findById(problemId).populate("creator");
+    // as we're deleting one place, then that place id should also be removed from the creators' place list, right??
+    // for that we'll be using populate method and this'll work only if there is relation b/w 2 schemas
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete coding-problem.",
@@ -127,8 +173,24 @@ const deleteProblemById = async (req, res, next) => {
     return next(error);
   }
 
+  if (!problem) {
+    const error = new HttpError(
+      "Could not find problem for the given id.",
+      404
+    );
+    return next(error);
+  }
+
   try {
     await problem.deleteOne();
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    await problem.deleteOne({ session: session });
+    problem.creator.problems.pull(problem);
+    await problem.creator.save({ session: session });
+
+    await session.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete coding-problem.",
