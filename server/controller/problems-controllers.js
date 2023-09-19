@@ -3,10 +3,7 @@ const HttpError = require("../model/http-error");
 const { validationResult } = require("express-validator");
 const Problem = require("../model/problem-schema");
 const User = require("../model/user-schema");
-const testProblemArray = require("../../frontend/src/shared/components/testingData/testData");
 const { default: mongoose } = require("mongoose");
-
-let allProblems = testProblemArray.PROBLEMS;
 
 const getProblemById = async (req, res, next) => {
   const problemId = req.params.probId;
@@ -22,10 +19,6 @@ const getProblemById = async (req, res, next) => {
   }
 
   if (!problem) {
-    // const error = new Error("Could not find a problem for the provided id.");
-    // error.code = 404;
-    // return next(error);
-
     const error = new HttpError(
       "Could not find a coding-problem for the provided id.",
       404

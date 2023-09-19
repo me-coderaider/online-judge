@@ -12,6 +12,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
+// for handling CORS error (enforced by browsers), basically setting some specific 3 headers (origin, headers, methods) to the request
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // tells which domain should have access and * means any domain
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  ); // incoming requests with these headers will be allowed
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
+});
+
 app.use("/api/problems", problemRoutes);
 app.use("/api/users", usersRoutes);
 

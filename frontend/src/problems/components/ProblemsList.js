@@ -40,7 +40,7 @@ const ProblemsList = (props) => {
               key={problem.id}
               solved={problem.solved}
               id={problem.id}
-              name={problem.name}
+              title={problem.title}
               description={problem.description}
               difficulty={problem.difficulty}
               creatorId={problem.creatorId}
