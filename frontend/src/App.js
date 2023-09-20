@@ -1,5 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Users from "./users/pages/Users";
 import NewProblem from "./problems/pages/NewProblem";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
@@ -11,13 +16,16 @@ import { AuthContext } from "./shared/context/auth-context";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
 
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   }, []);
 
   let routes;
@@ -29,7 +37,7 @@ const App = () => {
         <Route path="/new_problem" element={<AddNewProblem />}></Route>
         <Route path="/problems/:probId" element={<SingleProblem />}></Route>
         <Route
-          path="/updateproblem/:creatorId/:probId"
+          path="/updateproblem/:probId"
           element={<UpdateProblem />}
         ></Route>
         <Route path="*" element={<Navigate replace to="/"></Navigate>} />
@@ -48,14 +56,17 @@ const App = () => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
     >
       <Router>
         <MainNavigation />
         <main>
-          <Routes>
-           {routes}
-          </Routes>
+          <Routes>{routes}</Routes>
         </main>
       </Router>
     </AuthContext.Provider>

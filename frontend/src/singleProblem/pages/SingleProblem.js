@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-
-import { PROBLEMS } from "../../shared/components/testingData/testData";
-
-import "./SingleProblem.css";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../shared/context/auth-context";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import Description from "../components/Description";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
-const map = new Map(PROBLEMS.map((obj) => [obj.id, obj]));
-
-const currentLoggedInUser = "u1";
+import "./SingleProblem.css";
 
 // similary this single problem will consist of multiple smaller components
 // description, editor, testcases == all 3 will be common for each of the problem
@@ -20,9 +18,23 @@ const SingleProblem = () => {
   // or maybe we can ask user to add a problem
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-
+  const [loadedProblems, setLoadedProblems] = useState("");
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
   const probId = useParams().probId;
-  const problemData = map.get(probId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSingleProblem = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/problems/${probId}`
+        );
+        setLoadedProblems(responseData.problem);
+      } catch (err) {}
+    };
+    fetchSingleProblem();
+  }, [sendRequest, probId]);
 
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
@@ -32,62 +44,75 @@ const SingleProblem = () => {
     setShowConfirmModal(false);
   };
 
-  const confirmDeleteHandler = () => {
+  const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
-    console.log("DELETING...");
+
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/problems/${probId}`,
+        "DELETE"
+      );
+      navigate("/problems");
+    } catch (err) {}
   };
-
-  // console.log(problemData);
-  if (problemData === undefined) {
-    return <div>problem doesn't exist</div>;
-  }
-
   // if current logged-in user's Id === problems' creator Id then we'll display the edit button
 
   return (
     <React.Fragment>
-      <Modal
-        show={showConfirmModal}
-        onCancel={cancelDeleteHandler}
-        header="Are you sure?"
-        footerClass="place-item__modal-actions"
-        footer={
-          <React.Fragment>
-            <Button inverse onClick={cancelDeleteHandler}>
-              CANCEL
-            </Button>
-            <Button danger onClick={confirmDeleteHandler}>
-              DELETE
-            </Button>
-          </React.Fragment>
-        }
-      >
-        <p>
-          Do you want to proceed and delete this place? Please note that it
-          can't be undone thereafter.
-        </p>
-      </Modal>
-      <div className="singleProblem-parent">
-        <div>
-          {problemData.creatorId === currentLoggedInUser && (
-            <Button
-              to={`/updateproblem/${problemData.creatorId}/${problemData.id}`}
-            >
-              Edit Problem
-            </Button>
-          )}
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
         </div>
-        <div>
-          {problemData.creatorId === currentLoggedInUser && (
-            <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>
-          )}
-        </div>
-        <div className="singleProblem-description">{problemData.name}</div>
-        <div className="singleProblem-child">
-          <Description description={problemData.description} />
-        </div>
-        <div className="singleProblem-child">editor for the problem</div>
-      </div>
+      )}
+      {!isLoading && loadedProblems && (
+        <React.Fragment>
+          <Modal
+            show={showConfirmModal}
+            onCancel={cancelDeleteHandler}
+            header="Are you sure?"
+            footerClass="place-item__modal-actions"
+            footer={
+              <React.Fragment>
+                <Button inverse onClick={cancelDeleteHandler}>
+                  CANCEL
+                </Button>
+                <Button danger onClick={confirmDeleteHandler}>
+                  DELETE
+                </Button>
+              </React.Fragment>
+            }
+          >
+            <p>
+              Do you want to proceed and delete this problem? Please note that
+              it can't be undone thereafter.
+            </p>
+          </Modal>
+          <div className="singleProblem-parent">
+            <div>
+              {loadedProblems.creator === auth.userId && (
+                <Button to={`/updateproblem/${loadedProblems.id}`}>
+                  UPDATE PROBLEM
+                </Button>
+              )}
+            </div>
+            <div>
+              {loadedProblems.creator === auth.userId && (
+                <Button danger onClick={showDeleteWarningHandler}>
+                  DELETE
+                </Button>
+              )}
+            </div>
+            <div className="singleProblem-description">
+              {loadedProblems.title}
+            </div>
+            <div className="singleProblem-child">
+              <Description description={loadedProblems.description} />
+            </div>
+            <div className="singleProblem-child">editor for the problem</div>
+          </div>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

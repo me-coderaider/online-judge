@@ -61,7 +61,7 @@ const createProblem = async (req, res, next) => {
     description: description,
     testCases: "testCases",
     solved: false,
-    difficulty: difficulty,
+    difficulty: "easy",
     creator: creator,
   });
   let user;
