@@ -94,6 +94,7 @@ const UpdateProblem = () => {
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
       navigate("/problems/" + probId);

@@ -44,10 +44,10 @@ const AddNewProblem = () => {
         JSON.stringify({
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
-          creator: auth.userId,
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
       navigate("/problems");

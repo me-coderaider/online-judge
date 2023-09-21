@@ -53,20 +53,20 @@ const createProblem = async (req, res, next) => {
     );
   }
 
-  const { title, description, testCases, difficulty, creator } = req.body;
+  const { title, description, testCases, difficulty } = req.body;
 
   // adding places locally
   const createdProblem = new Problem({
     title: title,
     description: description,
-    testCases: "testCases",
+    testCases: testCases,
     solved: false,
     difficulty: "easy",
-    creator: creator,
+    creator: req.userData.userId,
   });
   let user;
   try {
-    user = await User.findById(creator);
+    user = await User.findById(req.userData.userId);
   } catch (err) {
     const error = new HttpError(
       "Problem creation failed, please try again later.",
@@ -132,6 +132,15 @@ const updateProblemById = async (req, res, next) => {
     );
     return next(error);
   }
+
+  if (updatedProblem.creator.toString() !== req.userData.userId) {
+    const error = new HttpError(
+      "You are not allowed to edit this problem.",
+      401
+    );
+    return next(error);
+  }
+
   updatedProblem.title = title;
   updatedProblem.description = description;
 
@@ -170,6 +179,14 @@ const deleteProblemById = async (req, res, next) => {
     const error = new HttpError(
       "Could not find problem for the given id.",
       404
+    );
+    return next(error);
+  }
+
+  if (problem.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      "You are not allowed to delete this problem",
+      401
     );
     return next(error);
   }

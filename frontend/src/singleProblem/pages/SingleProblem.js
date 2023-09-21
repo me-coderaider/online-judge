@@ -50,7 +50,12 @@ const SingleProblem = () => {
     try {
       await sendRequest(
         `http://localhost:5000/api/problems/${probId}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       navigate("/problems");
     } catch (err) {}
