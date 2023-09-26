@@ -1,25 +1,50 @@
 .singleProblem-parent {
-    border: 1px solid black;
-    margin: 1rem;
-    /* margin-top: auto; */
-    padding: 2rem 2rem;
-    text-align: center;
-    color: white;
-    /* height: 100vh; */
-    /* display:inline ; */
-  }
-  .singleProblem-description {
-    display: block;
-    border: 1px solid green;
-    padding: 1rem 1rem;
-   /* width: 30vh; */
-  }
-  .singleProblem-child {
-    display: inline-block;
-    border: 1px solid red;
-    padding: 1rem 1rem;
-    vertical-align: middle;
-    /* height: 80vh;
+  /* border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+  color: white; */
+
+  position: relative;
+  margin: 0;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+  /* border-radius: 6px; */
+  padding: 1rem;
+  overflow: hidden;
+  background: #4d4d4d;
+}
+.problem_title_desc {
+  position: relative;
+  margin: 0;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26); */
+  /* border-radius: 6px;     */
+  padding: 1rem;
+  overflow: hidden;
+  background: white;
+}
+.singleProblem-description {
+  display: block;
+  border: 1px solid green;
+  padding: 1rem 1rem;
+  /* width: 30vh; */
+}
+.singleProblem-child {
+  display: inline-block;
+  border: 1px solid red;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+  /* height: 80vh;
     width: 50vh; */
-  }
-  
+}
+
+.singleProblem-button {
+  position: relative;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  /* border-radius: 6px; */
+  padding: 1rem;
+  overflow: hidden;
+  background: white;
+  align-items: end;
+  display: block;
+}

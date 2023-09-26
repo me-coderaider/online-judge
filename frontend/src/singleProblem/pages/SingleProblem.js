@@ -7,6 +7,7 @@ import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import CodeEditor from "../components/CodeEditor";
 
 import "./SingleProblem.css";
 
@@ -94,27 +95,35 @@ const SingleProblem = () => {
             </p>
           </Modal>
           <div className="singleProblem-parent">
-            <div>
-              {loadedProblems.creator === auth.userId && (
-                <Button to={`/updateproblem/${loadedProblems.id}`}>
-                  UPDATE PROBLEM
-                </Button>
-              )}
-            </div>
-            <div>
-              {loadedProblems.creator === auth.userId && (
-                <Button danger onClick={showDeleteWarningHandler}>
-                  DELETE
-                </Button>
-              )}
-            </div>
-            <div className="singleProblem-description">
-              {loadedProblems.title}
-            </div>
-            <div className="singleProblem-child">
+            {!isLoading && loadedProblems.creator === auth.userId && (
+              <div className="singleProblem-button">
+                <div>
+                  <div>
+                    <h3>Want to update or delete this problem?</h3>
+                    <h4>
+                      Note: Other users won't have the previledge to either
+                      update or delete problem created by you.
+                    </h4>
+                  </div>
+                  {loadedProblems.creator === auth.userId && (
+                    <Button to={`/updateproblem/${loadedProblems.id}`}>
+                      UPDATE
+                    </Button>
+                  )}
+
+                  {loadedProblems.creator === auth.userId && (
+                    <Button danger onClick={showDeleteWarningHandler}>
+                      DELETE
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+            <div className="problem_title_desc">
+              <h1>{loadedProblems.title}</h1>
               <Description description={loadedProblems.description} />
             </div>
-            <div className="singleProblem-child">editor for the problem</div>
+            <CodeEditor />
           </div>
         </React.Fragment>
       )}

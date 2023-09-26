@@ -1,13 +1,9 @@
 import React from "react";
 
-import './Description.css'
+import "./Description.css";
 
-const Description = (props) =>{
-    return (
-        <div>
-            {props.description}
-        </div>
-    )
-}
+const Description = (props) => {
+  return <div>{props.description}</div>;
+};
 
 export default Description;

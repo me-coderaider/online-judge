@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProblemsList from "../components/ProblemsList";
-import { PROBLEMS } from "../../shared/components/testingData/testData";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-
-const PROBLEMS1 = PROBLEMS;
 
 const NewProblem = () => {
   // whenever this page loads, we want to send the request for fetching customers
