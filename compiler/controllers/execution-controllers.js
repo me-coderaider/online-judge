@@ -1,21 +1,25 @@
 const HttpError = require("../models/http-error");
-const { generateFile } = require("../cpp/generateFile");
-const { executeCpp } = require("../cpp/executeCpp");
+const { generateFilePath } = require("../codeExecutor/generateFilePath");
+const { genericExecuteCode } = require("../codeExecutor/genericExecuteCode");
 
 const runProgram = async (req, res, next) => {
-  const { language, input, code } = req.body;
-  try {
-    if (language === "cpp") {
-      const filePath = await generateFile(language, code);
-      const output = await executeCpp(filePath);
-      console.log(output);
-      res.status(200).json({ filePath, output });
-    }
-  } catch (err) {
-    const error = new HttpError("Failed to run the code", 500);
+  const { language, code, input } = req.body;
+
+  if (!language || !code || !input) {
+    const error = new HttpError("Missing required fields.", 400);
     return next(error);
   }
-  res.send({ message: "we are executing cpp code" });
-};
+  try {
+    const filePath = await generateFilePath(language, code);
+    const output = await genericExecuteCode(filePath, language, input);
 
+    res.status(200).json({ output: output.trim() });
+  } catch (err) {
+    const error = new HttpError(
+      "Couldn't able to compile the code, please try again.",
+      500
+    );
+    return next(error);
+  }
+};
 exports.runProgram = runProgram;

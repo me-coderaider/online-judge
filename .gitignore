@@ -1,4 +1,9 @@
 /frontend/node_modules
 /server/node_modules
 /server/.env
+/frontend/.env
 /frontend/src/shared/components/testingData
+/compiler/node_modules
+/compiler/codeexecutor/codes
+/compiler/codeexecutor/outputs
+/compiler/codeexecutor/inputs

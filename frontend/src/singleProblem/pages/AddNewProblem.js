@@ -39,7 +39,7 @@ const AddNewProblem = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        "http://localhost:5000/api/problems/new_problem",
+        `${process.env.REACT_APP_SERVER_PATH}/api/problems/new_problem`,
         "POST",
         JSON.stringify({
           title: formState.inputs.title.value,

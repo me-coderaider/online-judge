@@ -29,7 +29,7 @@ const SingleProblem = () => {
     const fetchSingleProblem = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/problems/${probId}`
+          `${process.env.REACT_APP_SERVER_PATH}/api/problems/${probId}`
         );
         setLoadedProblems(responseData.problem);
       } catch (err) {}
@@ -50,7 +50,7 @@ const SingleProblem = () => {
 
     try {
       await sendRequest(
-        `http://localhost:5000/api/problems/${probId}`,
+        `${process.env.REACT_APP_SERVER_PATH}/api/problems/${probId}`,
         "DELETE",
         null,
         {

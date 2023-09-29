@@ -8,11 +8,17 @@
 }
 .editor_input_output {
   display: block;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #282828;
 }
 
 .input_output {
   margin: 5px;
-  /* width: 30%; */
+  display: flex;
+}
+.input {
+  margin-right: 40px;
 }
 
 @media (min-width: 768px) {

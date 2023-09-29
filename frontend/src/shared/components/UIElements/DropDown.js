@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
 import "./DropDown.css";
-const DropDown = () => {
-  const [language, setLanguage] = useState("javascript");
+const DropDown = (props) => {
+  const [language, setLanguage] = useState("java");
 
   const changeLanguageHandler = (event) => {
     setLanguage(event.target.value);
   };
+  props.onChangeLanguage(language);
+
   return (
     <select
       name="language"
@@ -14,9 +16,9 @@ const DropDown = () => {
       required
       onChangeCapture={changeLanguageHandler}
     >
-      <option value="javascript">Javascript</option>
       <option value="java">Java</option>
-      <option value="python">Python</option>
+      <option value="js">Javascript</option>
+      <option value="py">Python</option>
       <option value="cpp">C++</option>
     </select>
   );

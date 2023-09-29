@@ -27,15 +27,28 @@ const ProblemsList = (props) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">Status</TableCell>
-            <TableCell align="left">Title</TableCell>
-            <TableCell align="left">Difficulty</TableCell>
-            {/* <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+            <TableCell
+              align="left"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              SR. NO.
+            </TableCell>
+            <TableCell
+              align="left"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              TITLE
+            </TableCell>
+            <TableCell
+              align="left"
+              style={{ fontSize: "18px", fontWeight: "bold" }}
+            >
+              DIFFICULTY
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.items.map((problem) => (
+          {props.items.map((problem, index) => (
             <ProblemsItem
               key={problem.id}
               solved={problem.solved}
@@ -44,6 +57,7 @@ const ProblemsList = (props) => {
               description={problem.description}
               difficulty={problem.difficulty}
               creator={problem.creator}
+              index={index}
             />
           ))}
         </TableBody>

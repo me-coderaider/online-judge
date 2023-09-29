@@ -15,10 +15,20 @@ const ProblemsItem = (props) => {
   return (
     <TableRow>
       <TableCell align="left">
-        {props.solved && <CheckCircleSharpIcon style={{ color: "green" }} />}
+        {/* {props.solved && <CheckCircleSharpIcon style={{ color: "green" }} />} */}
+        {props.index + 1}
       </TableCell>
-      <TableCell align="left">
-        <Link to={`/problems/${props.id}`}>{props.title}</Link>
+      <TableCell
+        align="left"
+        style={{
+          padding: "12px",
+          fontSize: "15px",
+          fontWeight: "bold",
+        }}
+      >
+        <Link to={`/problems/${props.id}`} style={{ textDecoration: "none" }}>
+          {props.title}
+        </Link>
       </TableCell>
       <TableCell align="left">{props.difficulty}</TableCell>
     </TableRow>
