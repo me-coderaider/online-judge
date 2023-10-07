@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# Online Judge💻
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An online judge is an online system to test programs in programming contests or for practicing Data structure & Algorithms’ knowledge through problems. The system can compile and execute your code, and test your code with pre-constructed data called test-cases. Submitted code may be run with restrictions, including time limit, memory limit, security restriction, and so on. The output of the code will be captured by the system, and compared with the standard output. The system will then return the verdict as Accepted, Wrong Answer or different message based on evaluation.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Folder Structure](#folder-structure)
+- [Installation](#installation)
+- [Usage](#usage)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Allow users to create accounts and log in securely.
+- Display problems-list, problem statements, input/output formats, and example test cases.
+- Allow users to submit their code solutions in various programming languages.
+- Validate code submissions for syntax errors.
+- Evaluate submitted code against multiple test cases.
+- Compile and execute submitted code in isolated environments.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- MERN STACK
+- MongoDB
+- Express.js: 4.18.2
+- React: 18.2.0
+- Node.js: 18.17.0
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Folder Structure
 
-### `npm run build`
+- Project has 3 folders:
+- a) Frontend - handles as name suggests UI part😊
+- b) Server - all backend routes
+- c) Compiler - execution of the problems
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Clone this repository to your local machine.
+- Navigate to the project directory.
+- Install **frontend** dependencies.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  ```
+  cd frontend
+  npm install
+  ```
 
-### `npm run eject`
+- Install **backend** dependencies.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  ```
+  cd server
+  npm install
+  ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Install **compiler** dependencies.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  ```
+  cd compiler
+  npm install
+  ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Configure **environment** variables.
+  - Create a `.env` file in the `compiler`, `server` & `frontend` directory.
+  - Add necessary environment variables (e.g., database URI, JWT secret, port-number).
+- Start the server
+  ```
+  cd backend
+  npm start
+  ```
+- Start the client.
+  ```
+  cd frontend
+  npm start
+  ```
+- Open your browser and go to `http://localhost:3000` to use the app.
 
-## Learn More
+## Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Register or log in to your account.
+- Users can view the problems and check out the description of the problem by clicking on Solve and submit the solution of the problem in C/C++/Java/Python.
+- Users can perform **CRUD** operations over problem API i.e. they can add problems and test cases for it, update the problem and even delete the created problem.
+- When a problem is submitted, Verdict will be display.
