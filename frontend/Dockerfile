@@ -1,4 +1,5 @@
-FROM node:18-alpine
+# node block
+FROM node:18-alpine AS frontend
 
 WORKDIR /app
 
@@ -8,6 +9,15 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD [ "npm","start" ]
+# nginx block
+FROM nginx:1.25-alpine
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=frontend /app/build .
+
+ENTRYPOINT [ "nginx","-g","daemon off;" ]

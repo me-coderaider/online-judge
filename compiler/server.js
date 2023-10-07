@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
 const HttpError = require("./models/http-error");
 const executionRoutes = require("./routes/execution-routes");
+dotenv.config();
 
 const app = express();
 
@@ -34,4 +36,7 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unknown error occurred." });
 });
 
-app.listen(5001, console.log("compiler server running on 5001..."));
+app.listen(
+  process.env.COMPILER_PORT,
+  console.log(`compiler server running on ${process.env.COMPILER_PORT}`)
+);

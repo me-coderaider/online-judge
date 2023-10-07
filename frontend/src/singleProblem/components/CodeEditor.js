@@ -4,6 +4,7 @@ import Button from "../../shared/components/FormElements/Button";
 import DropDown from "../../shared/components/UIElements/DropDown";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+// import { sampleCode } from "../../shared/util/sampleCode";
 
 import "./CodeEditor.css";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -18,6 +19,7 @@ const CodeEditor = () => {
   const [input, setInput] = useState();
   const [output, setOutput] = useState();
   const [message, setMessage] = useState();
+  //   const [sampleCode1, setSampleCode] = useState();
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -71,6 +73,7 @@ const CodeEditor = () => {
   const inputChangeHandler = (event) => {
     setInput(event.target.value);
   };
+  //   setSampleCode(sampleCode(language));
 
   return (
     <React.Fragment>
@@ -88,11 +91,7 @@ const CodeEditor = () => {
             height={height}
             width={width}
             defaultLanguage="java"
-            defaultValue="public class Main{
-          public static void main(String[] args){
-              System.out.println();
-          }
-      }"
+            defaultValue="this is java"
             theme="vs-dark"
             onChange={handleEditorChange}
           />

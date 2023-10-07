@@ -2,6 +2,7 @@
 /server/node_modules
 /server/.env
 /frontend/.env
+/compiler/.env
 /frontend/src/shared/components/testingData
 /compiler/node_modules
 /compiler/codeexecutor/codes
