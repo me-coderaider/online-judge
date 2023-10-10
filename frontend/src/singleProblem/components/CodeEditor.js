@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Editor from "@monaco-editor/react";
 import Button from "../../shared/components/FormElements/Button";
 import DropDown from "../../shared/components/UIElements/DropDown";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 // import { sampleCode } from "../../shared/util/sampleCode";
+// import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 import "./CodeEditor.css";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const CodeEditor = () => {
   const height = "70vh";
@@ -21,7 +21,7 @@ const CodeEditor = () => {
   const [message, setMessage] = useState();
   //   const [sampleCode1, setSampleCode] = useState();
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   const programRunHandler = async (event) => {
     event.preventDefault();
@@ -74,6 +74,13 @@ const CodeEditor = () => {
     setInput(event.target.value);
   };
   //   setSampleCode(sampleCode(language));
+  //   const editorRef = useRef(null);
+
+  //   function handleEditorDidMount(editor, monaco) {
+  //     // here is the editor instance
+  //     // you can store it in `useRef` for further usage
+  //     editorRef.current = editor;
+  //   }
 
   return (
     <React.Fragment>
@@ -82,9 +89,11 @@ const CodeEditor = () => {
           Choose a Language:
         </label>
         <DropDown onChangeLanguage={changeLanguageHandler} />
-        {/* {language === "java" && (
-          <p>please keep class name as Main and access as Public</p>
-        )} */}
+        {language === "java" && (
+          <p style={{ color: "red", fontWeight: "bold" }}>
+            please keep class name as "public class Main"
+          </p>
+        )}
 
         <div className="editor_input_output">
           <Editor
@@ -94,6 +103,7 @@ const CodeEditor = () => {
             defaultValue="this is java"
             theme="vs-dark"
             onChange={handleEditorChange}
+            // onMount={handleEditorDidMount}
           />
         </div>
         <div className="input_output">
