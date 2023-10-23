@@ -29,6 +29,14 @@ const AddNewProblem = () => {
         value: "",
         isValid: false,
       },
+      testcasesInput: {
+        value: "",
+        isValid: false,
+      },
+      testcasesOutput: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
@@ -44,6 +52,8 @@ const AddNewProblem = () => {
         JSON.stringify({
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
+          testcasesInput: formState.inputs.testcasesInput.value,
+          testcasesOutput: formState.inputs.testcasesOutput.value,
         }),
         {
           "Content-Type": "application/json",
@@ -77,23 +87,19 @@ const AddNewProblem = () => {
           onInput={inputHandler}
         />
         <Input
-          id="testcases"
-          element="textarea"
-          label="TestCases"
+          id="testcasesInput"
+          label="TestCases - Input"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter test-cases in valid format"
+          errorText="Please enter test-cases input in valid format"
           onInput={inputHandler}
         />
-        {/* <Input
-        id="singleOrMany"
-        element="input"
-        label="Single"
-        type="radio"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter test-cases in valid format"
-        onInput={inputHandler}
-      /> */}
-
+        <Input
+          id="testcasesOutput"
+          label="TestCases - Output"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter test-cases input in valid format"
+          onInput={inputHandler}
+        />
         <Button type="submit" disabled={!formState.isValid}>
           ADD PROBLEM
         </Button>

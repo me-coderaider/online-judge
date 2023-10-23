@@ -9,7 +9,7 @@ const getProblemById = async (req, res, next) => {
   const problemId = req.params.probId;
   let problem;
   try {
-    problem = await Problem.findById(problemId);
+    problem = await Problem.findById(problemId, "-testcasesOutput");
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a coding-problem",
@@ -32,7 +32,7 @@ const getProblemById = async (req, res, next) => {
 const getAllProblems = async (req, res, next) => {
   let problems;
   try {
-    problems = await Problem.find({});
+    problems = await Problem.find({}, "-testcasesOutput");
   } catch (err) {
     const error = new HttpError(
       "Fetching problems failed, please try again later.",
@@ -53,16 +53,17 @@ const createProblem = async (req, res, next) => {
     );
   }
 
-  const { title, description, testCases, difficulty } = req.body;
+  const { title, description, difficulty, testcasesInput, testcasesOutput } =
+    req.body;
 
   // adding places locally
   const createdProblem = new Problem({
     title: title,
     description: description,
-    testCases: testCases,
-    solved: false,
     difficulty: "easy",
     creator: req.userData.userId,
+    testcasesInput: testcasesInput,
+    testcasesOutput: testcasesOutput,
   });
   let user;
   try {

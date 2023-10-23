@@ -5,20 +5,21 @@ const DropDown = (props) => {
   const [language, setLanguage] = useState("java");
 
   const changeLanguageHandler = (event) => {
+    props.getLanguage(language);
     setLanguage(event.target.value);
   };
-  props.onChangeLanguage(language);
 
   return (
     <select
       name="language"
       id="language"
+      value={language}
       required
-      onChangeCapture={changeLanguageHandler}
+      onChange={changeLanguageHandler}
     >
       <option value="java">Java</option>
-      <option value="js">Javascript</option>
-      <option value="py">Python</option>
+      {/* <option value="js">Javascript</option>
+      <option value="py">Python</option> */}
       <option value="cpp">C++</option>
     </select>
   );

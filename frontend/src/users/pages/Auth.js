@@ -13,6 +13,8 @@ import {
 import { useForm } from "../../shared/hooks/form-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Auth.css";
 
 const Auth = () => {
@@ -80,8 +82,11 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
+        //toast.success("You are Logged in successfully!");
         auth.login(responseData.userId, responseData.token);
-      } catch (err) {}
+      } catch (err) {
+        //toast.success("Error in Logging in");
+      }
     } else {
       try {
         const responseData = await sendRequest(
@@ -146,6 +151,18 @@ const Auth = () => {
         <Button inverse onClick={switchModeHandler}>
           SWITCH TO {isLoginMode ? "SIGN UP" : "LOG IN"}
         </Button>
+        <ToastContainer
+          position="top-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </Card>
     </React.Fragment>
   );

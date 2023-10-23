@@ -97,9 +97,11 @@ const SingleProblem = () => {
           <div className="singleProblem-parent">
             {!isLoading && loadedProblems.creator === auth.userId && (
               <div className="singleProblem-button">
-                <div>
+                <span style={{ background: "white" }}>
+                  Want to update or delete this problem?
+                </span>
+                <div class="dropdown-content">
                   <div>
-                    <h3>Want to update or delete this problem?</h3>
                     <h4>
                       Note: Other users won't have the previledge to either
                       update or delete problem created by you.
@@ -110,7 +112,6 @@ const SingleProblem = () => {
                       UPDATE
                     </Button>
                   )}
-
                   {loadedProblems.creator === auth.userId && (
                     <Button danger onClick={showDeleteWarningHandler}>
                       DELETE
@@ -123,7 +124,7 @@ const SingleProblem = () => {
               <h1>{loadedProblems.title}</h1>
               <Description description={loadedProblems.description} />
             </div>
-            <CodeEditor />
+            <CodeEditor problemData={loadedProblems} />
           </div>
         </React.Fragment>
       )}

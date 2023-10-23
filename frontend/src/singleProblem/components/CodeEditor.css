@@ -1,5 +1,21 @@
 .editor_div {
   background: white;
+  padding: 1rem 1rem;
+}
+
+.editor_div label {
+  font-weight: bold;
+}
+
+.editor_div select {
+  width: 30%;
+  font-size: 1.15rem;
+  padding: 0rem 1rem;
+  background-color: #fff;
+  border: 1px solid #caced1;
+  border-radius: 0.25rem;
+  color: #000;
+  cursor: pointer;
 }
 
 .language_label {

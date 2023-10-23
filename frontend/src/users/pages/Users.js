@@ -1,5 +1,7 @@
 import React from "react";
 import { TypeAnimation } from "react-type-animation";
+import { NavLink } from "react-router-dom";
+import "./Users.css";
 
 const Users = () => {
   return (
@@ -37,6 +39,13 @@ const Users = () => {
           }}
           repeat={Infinity}
         />
+      </div>
+      <div className="center">
+        <ul className="nav-links-users">
+          <li>
+            <NavLink to="/problems">Explore Problems</NavLink>
+          </li>
+        </ul>
       </div>
     </div>
   );
