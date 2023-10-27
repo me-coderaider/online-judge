@@ -97,13 +97,19 @@ const SingleProblem = () => {
           <div className="singleProblem-parent">
             {!isLoading && loadedProblems.creator === auth.userId && (
               <div className="singleProblem-button">
-                <span style={{ background: "white" }}>
-                  Want to update or delete this problem?
+                <span
+                  style={{
+                    background: "#4d4d4d",
+                    color: "#1cf9f3",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Want to update or delete this problem? Hover Here!!!
                 </span>
-                <div class="dropdown-content">
+                <div className="dropdown-content">
                   <div>
                     <h4>
-                      Note: Other users won't have the previledge to either
+                      Note: Other users won't have the privilege to either
                       update or delete problem created by you.
                     </h4>
                   </div>

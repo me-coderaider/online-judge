@@ -8,7 +8,7 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "./CodeEditor.css";
 
 const CodeEditor = (props) => {
-  const height = "70vh";
+  const height = "50vh";
   const width = "95%";
 
   let sampleCode = `public class Main{
@@ -16,7 +16,6 @@ const CodeEditor = (props) => {
 		System.out.println("Be Creative");
 	}
 }`;
-
   const auth = useContext(AuthContext);
   const [language, setLanguage] = useState("java");
   const [code, setCode] = useState(`public class Main{
@@ -24,8 +23,9 @@ const CodeEditor = (props) => {
 		System.out.println("Be Creative");
 	}
 }`);
-  const [input, setInput] = useState();
+  const [input, setInput] = useState(props.problemData.testcasesInput);
   const [output, setOutput] = useState();
+  const [verdict, setVerdict] = useState();
   const [message, setMessage] = useState();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { sendRequest } = useHttpClient();
@@ -49,44 +49,76 @@ const CodeEditor = (props) => {
       );
       //   console.log(responseData);
       setOutput(responseData.output);
+      setMessage();
+      setVerdict();
     } catch (err) {
-      //   console.log(responseData);
+      //   console.log(err);
+      setOutput();
+      setVerdict();
       setMessage(
-        err + "\nPlease check if you have selected proper language or not."
+        err +
+          "\nor Please check if you have selected proper language, input or not."
       );
     }
   };
 
-  const programSubmitHandler = (event) => {
+  const programSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("submit code");
+    let responseData;
+    try {
+      responseData = await sendRequest(
+        `${process.env.REACT_APP_COMPILER_SERVER_PATH}/api/execution/submit`,
+        "POST",
+        JSON.stringify({
+          language: language,
+          code: code,
+          input: input,
+          actualOutput: props.problemData.testcasesOutput,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      setOutput(responseData.output);
+      setVerdict(responseData.verdict);
+      setMessage();
+    } catch (err) {
+      setOutput();
+      setVerdict();
+      setMessage(
+        err +
+          "\nPlease check if you have selected proper language, input or not."
+      );
+    }
   };
   const handleEditorChange = (value, event) => {
-    event.preventDefault();
     setCode(value);
   };
 
   const changeLanguageHandler = (event) => {
     event.preventDefault();
-    console.log(event.target.value);
     let selectedLang = event.target.value;
     setLanguage(selectedLang);
-
-    console.log(sampleCode);
   };
 
   const inputChangeHandler = (event) => {
     setInput(event.target.value);
   };
-  //   setSampleCode(sampleCode(language));
-  //   const editorRef = useRef(null);
+
+  const outputChangeHandler = (event) => {
+    setOutput(event.target.value);
+  };
 
   function handleEditorDidMount(editor, monaco) {
     // console.log("onMount: the editor instance:", editor);
     // console.log("onMount: the monaco instance:", monaco);
     setEditorLoaded(true);
   }
-
+  //   useEffect(() => {
+  //     // console.log(message);
+  //     // console.log(output);
+  //   }, [input, code]);
   return (
     <React.Fragment>
       <div className="editor_div">
@@ -114,7 +146,6 @@ const CodeEditor = (props) => {
             Please keep class name as "public class Main".
           </p>
         )}
-
         <div className="editor_input_output">
           {!editorLoaded && <LoadingSpinner />}
           <Editor
@@ -129,37 +160,45 @@ const CodeEditor = (props) => {
         </div>
         <div className="input_output">
           <div className="input">
-            <label>
-              Input:
-              <br />
-              <textarea
-                name="input"
-                value={props.problemData.testcasesInput}
-                rows={6}
-                cols={33}
-                onChange={inputChangeHandler}
-                required={true}
-              />
-            </label>
+            <label>Input:</label>
+            <br />
+            <textarea
+              name="input"
+              value={input}
+              rows={6}
+              cols={33}
+              onChange={inputChangeHandler}
+            />
           </div>
-          <div>
-            <label>
-              Output:
-              <br />
-              <textarea
-                name="output"
-                rows={6}
-                cols={33}
-                value={!output ? message : output}
-                disabled
-              />
-            </label>
+          <div className="output">
+            <label>Output:</label>
+            <br />
+            <textarea
+              name="output"
+              rows={6}
+              cols={33}
+              value={!output ? message : output}
+              onChange={outputChangeHandler}
+              disabled
+            />
           </div>
         </div>
-        <Button onClick={programRunHandler}>Compile</Button>
-        <Button danger onClick={programSubmitHandler}>
-          Submit
-        </Button>
+        <div className="complile-submit">
+          <Button onClick={programRunHandler}>Compile</Button>
+          <Button danger onClick={programSubmitHandler}>
+            Submit
+          </Button>
+          {verdict === "AC" && (
+            <div className="verdict" style={{ background: "green" }}>
+              VERDICT : {verdict}
+            </div>
+          )}
+          {verdict === "WA" && (
+            <div className="verdict" style={{ background: "red" }}>
+              VERDICT : {verdict}
+            </div>
+          )}
+        </div>
       </div>
     </React.Fragment>
   );

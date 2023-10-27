@@ -9,7 +9,7 @@ const getProblemById = async (req, res, next) => {
   const problemId = req.params.probId;
   let problem;
   try {
-    problem = await Problem.findById(problemId, "-testcasesOutput");
+    problem = await Problem.findById(problemId);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find a coding-problem",

@@ -30,11 +30,47 @@
 }
 
 .input_output {
-  margin: 5px;
-  display: flex;
+  margin: 1rem 0rem 0rem 0rem;
+  /* display: flex; */
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #282828;
 }
 .input {
   margin-right: 40px;
+}
+.input label {
+  color: white;
+}
+.input textarea {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+.output {
+  margin-right: 40px;
+}
+.output label {
+  color: white;
+}
+.output textarea {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+.complile-submit {
+  margin: 1rem 0rem 0rem 0rem;
+  /* display: flex; */
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #282828;
+}
+
+.verdict {
+  margin: 1rem 0rem 0rem 0rem;
+  border-radius: 6px;
+  font-weight: bold;
+  padding-left: 10px;
+  align-items: center;
 }
 
 @media (min-width: 768px) {

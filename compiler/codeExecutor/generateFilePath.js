@@ -12,7 +12,8 @@ const generateFilePath = async (language, code) => {
   if (language === "java") {
     fileName = "Main.java";
   } else {
-    fileName = `${uuid()}.${language}`;
+    // fileName = `${uuid()}.${language}`;
+    fileName = "Main.cpp";
   }
   const filePath = path.join(codeFolder, fileName);
   await fs.writeFileSync(filePath, code);

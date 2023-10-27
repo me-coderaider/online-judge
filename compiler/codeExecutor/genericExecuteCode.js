@@ -19,25 +19,35 @@ const genericExecuteCode = async (filePath, languageCode, input) => {
   const inputPath = path.join(inputFolder, `${fileId}.txt`);
   await fs.writeFileSync(inputPath, input);
 
+  const separator = process.platform === "win32" ? "\\" : "/"; // Determine the correct path separator
   const executeCommands = {
     cpp: [
-      `g++ ${filePath} -o ${outputPath} && cd ${outputFolder} && ./${fileId}.exe < ${inputPath}`,
+      //   `g++ ${filePath} -o ${outputPath} && cd ${outputFolder} && ./${fileId}.exe < ${inputPath}`,
+      `g++ ${filePath} -o ${outputPath} && cd ${outputFolder} && .${separator}${fileId}.exe < ${inputPath}`,
     ],
     py: [`python ${filePath} < ${inputPath}`],
     java: [`java ${filePath} < ${inputPath}`],
   };
 
   return new Promise((resolve, reject) => {
-    exec(executeCommands[languageCode][0], (error, stdout, stderr) => {
-      if (error) {
-        reject(error);
+    const executeCode = exec(
+      executeCommands[languageCode][0],
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+        }
+        if (stderr) {
+          reject(stderr);
+        }
+        //   console.log(stdout);
+        resolve(stdout);
       }
-      if (stderr) {
-        reject(stderr);
-      }
-      //   console.log(stdout);
-      resolve(stdout);
-    });
+    );
+    // executeCode.stdin.end();
+    setTimeout(() => {
+      executeCode.kill();
+      reject(`Time Limit Exceeded (TLE)`);
+    }, 3000);
   });
 };
 
