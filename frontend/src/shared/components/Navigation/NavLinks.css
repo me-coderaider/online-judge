@@ -20,6 +20,7 @@
   text-decoration: none;
   padding: 0.5rem;
   border-radius: 10px;
+  font-weight: bold;
 }
 
 .nav-links a:hover,
@@ -38,6 +39,7 @@
   padding: 0.5rem;
   font: inherit;
   border-radius: 10px;
+  font-weight: bold;
 }
 
 .nav-links button:focus {
