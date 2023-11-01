@@ -122,30 +122,32 @@ const CodeEditor = (props) => {
   return (
     <React.Fragment>
       <div className="editor_div">
-        <label htmlFor="language" className="language_label">
-          Choose a Language:
-        </label>
-        <select
-          name="language"
-          id="language"
-          value={language}
-          required
-          onChange={changeLanguageHandler}
-        >
-          <option value="java">Java</option>
-          <option value="cpp">C++</option>
-        </select>
-        {language === "java" && (
-          <p
-            style={{
-              color: "red",
-              fontWeight: "bold",
-              margin: "0rem 0rem 0.5rem 0.0rem",
-            }}
+        <div className="dropdown-msg">
+          <label htmlFor="language" className="language_label">
+            Choose a Language&nbsp;&nbsp;
+          </label>
+          <select
+            name="language"
+            id="language"
+            value={language}
+            required
+            onChange={changeLanguageHandler}
           >
-            Please keep class name as "public class Main".
-          </p>
-        )}
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </select>
+          {language === "java" && (
+            <p
+              style={{
+                color: "red",
+                fontWeight: "bold",
+                margin: "0rem 0rem 0.5rem 0.0rem",
+              }}
+            >
+              Please keep class name as "public class Main".
+            </p>
+          )}
+        </div>
         <div className="editor_input_output">
           {!editorLoaded && <LoadingSpinner />}
           <Editor

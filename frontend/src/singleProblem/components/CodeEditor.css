@@ -19,7 +19,8 @@
 }
 
 .language_label {
-  background-color: white;
+  background-color: #282828;
+  color: white;
   font-size: larger;
 }
 .editor_input_output {
@@ -27,6 +28,14 @@
   padding: 20px;
   border-radius: 10px;
   background-color: #282828;
+}
+
+.dropdown-msg {
+  display: block;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #282828;
+  margin-bottom: 20px;
 }
 
 .input_output {

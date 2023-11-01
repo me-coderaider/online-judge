@@ -3,7 +3,13 @@ import React from "react";
 import "./Description.css";
 
 const Description = (props) => {
-  return <div className="problem-description">{props.description}</div>;
+  const problemDescription = props.description;
+  //   return <div className="problem-description">{props.description}</div>;
+  return (
+    <div className="problem-description">
+      <textarea value={problemDescription} />
+    </div>
+  );
 };
 
 export default Description;
