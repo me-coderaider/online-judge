@@ -65,6 +65,7 @@
 .output textarea {
   color: rgb(0, 0, 0);
   font-weight: bold;
+  background-color: white !important;
 }
 .complile-submit {
   margin: 1rem 0rem 0rem 0rem;

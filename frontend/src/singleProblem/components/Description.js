@@ -7,7 +7,7 @@ const Description = (props) => {
   //   return <div className="problem-description">{props.description}</div>;
   return (
     <div className="problem-description">
-      <textarea value={problemDescription} />
+      <textarea value={problemDescription} readOnly />
     </div>
   );
 };
