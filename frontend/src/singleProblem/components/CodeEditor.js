@@ -72,7 +72,7 @@ const CodeEditor = (props) => {
         JSON.stringify({
           language: language,
           code: code,
-          input: input,
+          input: props.problemData.testcasesInput,
           actualOutput: props.problemData.testcasesOutput,
         }),
         {
@@ -80,7 +80,7 @@ const CodeEditor = (props) => {
           Authorization: "Bearer " + auth.token,
         }
       );
-      setOutput(responseData.output);
+      setOutput();
       setVerdict(responseData.verdict);
       setMessage();
     } catch (err) {
